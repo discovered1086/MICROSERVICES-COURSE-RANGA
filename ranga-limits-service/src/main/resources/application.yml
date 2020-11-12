@@ -1,0 +1,14 @@
+spring:
+   application:
+      name: limits-microservice
+      
+---
+
+server:
+   port: 8081
+   
+---
+
+limits-service:
+   minLimit: 15
+   maxLimit: 1000
