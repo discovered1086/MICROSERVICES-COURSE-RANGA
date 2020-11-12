@@ -9,6 +9,7 @@ server:
    
 ---
 
-limits-service:
-   minLimit: 15
-   maxLimit: 1000
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8010
