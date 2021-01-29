@@ -25,6 +25,5 @@ public class ExchangeValue {
     @NonNull
     private BigDecimal exchangeRate;
 
-    @JsonIgnore
     private int port;
 }

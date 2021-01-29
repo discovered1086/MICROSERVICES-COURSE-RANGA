@@ -73,6 +73,7 @@ public class CurrencyConversionController {
                 .fromAmount(amount)
                 .exchangeValue(exchangeValue)
                 .toAmount(amount.multiply(Objects.nonNull(exchangeValue) ? exchangeValue.getExchangeRate() : BigDecimal.ONE))
+                .port(exchangeValue.getPort())
                 .build();
 
     }
