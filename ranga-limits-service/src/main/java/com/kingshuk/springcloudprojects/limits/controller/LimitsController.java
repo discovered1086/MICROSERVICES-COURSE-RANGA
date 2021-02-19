@@ -10,7 +10,7 @@ import com.kingshuk.springcloudprojects.limits.model.LimitServiceConfiguration;
 
 @RestController
 @RequestMapping("/limits")
-public class LlimitsController {
+public class LimitsController {
 
 	@Autowired
 	private LimitServiceConfiguration configurationProperties;

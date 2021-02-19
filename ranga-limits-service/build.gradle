@@ -28,7 +28,8 @@ dependencies {
 	}
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-	compile group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
+	compile group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+	annotationProcessor 'org.projectlombok:lombok:1.18.16'
 }
 
 dependencyManagement {
