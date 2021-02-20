@@ -1,5 +1,6 @@
 package com.kingshuk.springcloudprojects.limits.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +17,18 @@ public class LimitsController {
 	private LimitServiceConfiguration configurationProperties;
 
 	@GetMapping
-	public LimitConfiguration getLimitsFromConfiguration() {
+	public LimitConfiguration getLimitsFromBean() {
 		return new LimitConfiguration(configurationProperties.getMinLimit(), configurationProperties.getMaxLimit());
+	}
+
+	@GetMapping("/fault-tolerance-test")
+	@HystrixCommand(fallbackMethod = "fallBackLimitsConfiguration")
+	public LimitConfiguration getLimitsFromConfiguration() {
+		throw new RuntimeException("Something went wrong in a dependent service");
+	}
+
+	public LimitConfiguration fallBackLimitsConfiguration(){
+		return new LimitConfiguration(88, 8888);
 	}
 
 }
