@@ -11,8 +11,11 @@ public class ApiRoutingConfiguration {
     @Bean
     public RouteLocator applicationRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route(p -> p.path("/currency-convertor-feign/**")
-                        .uri("http://currency-conversion-service/currency-convertor-v2/(?<remaining>.*)"))
+                .route(p -> p.path("/currency-conversion-service/currency-convertor-feign/**")
+                        .filters(gatewayFilterSpec -> gatewayFilterSpec
+                                .rewritePath("/currency-conversion-service/currency-convertor-feign/(?<remaining>.*)"
+                                , "/currency-convertor-v2/${remaining}"))
+                        .uri("lb://currency-conversion-service/"))
                 .build();
     }
 }
