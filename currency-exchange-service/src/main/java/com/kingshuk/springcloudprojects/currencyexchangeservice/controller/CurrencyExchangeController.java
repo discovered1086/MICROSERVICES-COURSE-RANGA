@@ -2,6 +2,9 @@ package com.kingshuk.springcloudprojects.currencyexchangeservice.controller;
 
 import com.kingshuk.springcloudprojects.currencyexchangeservice.dao.ExchangeValueRepository;
 import com.kingshuk.springcloudprojects.currencyexchangeservice.model.ExchangeValue;
+import io.github.resilience4j.retry.annotation.Retry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/currency-exchange")
+//@RequestMapping("/currency-exchange")
 public class CurrencyExchangeController {
+
+    private final Logger logger= LoggerFactory.getLogger(CurrencyExchangeController.class);
 
     @Autowired
     private Environment environment;
@@ -21,7 +27,7 @@ public class CurrencyExchangeController {
     @Autowired
     private ExchangeValueRepository exchangeValueRepository;
 
-    @GetMapping("/from/{fromCurrency}/to/{toCurrency}")
+    @GetMapping("/currency-exchange/from/{fromCurrency}/to/{toCurrency}")
     public ExchangeValue getCurrencyExchangeRate(
             @PathVariable String fromCurrency,
             @PathVariable String toCurrency) {
@@ -30,5 +36,32 @@ public class CurrencyExchangeController {
                 Objects.requireNonNull(
                         environment.getProperty("local.server.port"))));
         return exchangevalue;
+    }
+
+    @GetMapping("/currency-exchange-resilience4j-retry/from/{fromCurrency}/to/{toCurrency}")
+    @Retry(name="currency-exchange", fallbackMethod = "defaultCurrencyExchange")
+    //@Retry(name="currency-exchange")
+    public ExchangeValue getCurrencyExchangeRateRetry(
+            @PathVariable String fromCurrency,
+            @PathVariable String toCurrency) {
+        logger.info("Currency exchange service retry method executed");
+        ExchangeValue exchangevalue = exchangeValueRepository.findByFromCurrencyAndToCurrency(fromCurrency, toCurrency);
+        exchangevalue.setPort(Integer.parseInt(
+                Objects.requireNonNull(
+                        environment.getProperty("local.server.port"))));
+        throw new RuntimeException("Something went wrong");
+    }
+
+    @SuppressWarnings({"unused", "java:S1144"})
+    private ExchangeValue defaultCurrencyExchange(RuntimeException exception){
+        return ExchangeValue.builder()
+                .port(Integer.parseInt(
+                        Objects.requireNonNull(
+                                environment.getProperty("local.server.port"))))
+                .fromCurrency("USD")
+                .id(1000)
+                .toCurrency("INR")
+                .exchangeRate(BigDecimal.valueOf(60.31))
+                .build();
     }
 }
