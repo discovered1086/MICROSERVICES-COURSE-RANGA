@@ -2,14 +2,14 @@ package com.kingshuk.springcloudprojects.currencyexchangeservice.controller;
 
 import com.kingshuk.springcloudprojects.currencyexchangeservice.dao.ExchangeValueRepository;
 import com.kingshuk.springcloudprojects.currencyexchangeservice.model.ExchangeValue;
-import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
@@ -28,6 +28,8 @@ public class CurrencyExchangeController {
     private ExchangeValueRepository exchangeValueRepository;
 
     @GetMapping("/currency-exchange/from/{fromCurrency}/to/{toCurrency}")
+    //@RateLimiter(name="default", fallbackMethod = "defaultCurrencyExchange")
+    @RateLimiter(name="default")
     public ExchangeValue getCurrencyExchangeRate(
             @PathVariable String fromCurrency,
             @PathVariable String toCurrency) {
@@ -39,8 +41,9 @@ public class CurrencyExchangeController {
     }
 
     @GetMapping("/currency-exchange-resilience4j-retry/from/{fromCurrency}/to/{toCurrency}")
-    @Retry(name="currency-exchange", fallbackMethod = "defaultCurrencyExchange")
+    //@Retry(name="currency-exchange", fallbackMethod = "defaultCurrencyExchange")
     //@Retry(name="currency-exchange")
+    @CircuitBreaker(name="default", fallbackMethod = "defaultCurrencyExchange")
     public ExchangeValue getCurrencyExchangeRateRetry(
             @PathVariable String fromCurrency,
             @PathVariable String toCurrency) {
@@ -54,6 +57,7 @@ public class CurrencyExchangeController {
 
     @SuppressWarnings({"unused", "java:S1144"})
     private ExchangeValue defaultCurrencyExchange(RuntimeException exception){
+        logger.info("Fallback method has been called");
         return ExchangeValue.builder()
                 .port(Integer.parseInt(
                         Objects.requireNonNull(
