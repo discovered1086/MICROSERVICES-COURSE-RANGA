@@ -19,4 +19,6 @@ public class CurrencyConversionDTO {
     private BigDecimal fromAmount;
 
     private BigDecimal toAmount;
+
+    private int port;
 }
