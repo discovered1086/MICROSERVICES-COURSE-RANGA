@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.3.8.RELEASE'
+    id 'org.springframework.boot' version '2.4.2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
@@ -7,6 +7,8 @@ plugins {
 group = 'com.kingshuk.springcloudprojects'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+apply plugin: 'project-report'
 
 configurations {
     compileOnly {
@@ -20,12 +22,13 @@ repositories {
 }
 
 ext {
-    set('springCloudVersion', "Hoxton.SR9")
+    set('springCloudVersion', "2020.0.0")
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
     implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
     implementation 'org.springframework.amqp:spring-rabbit'
@@ -46,3 +49,10 @@ dependencyManagement {
 test {
     useJUnitPlatform()
 }
+<<<<<<< HEAD
+
+htmlDependencyReport {
+    reports.html.destination = file("build/reports/project/dependencies")
+}
+=======
+>>>>>>> origin/main

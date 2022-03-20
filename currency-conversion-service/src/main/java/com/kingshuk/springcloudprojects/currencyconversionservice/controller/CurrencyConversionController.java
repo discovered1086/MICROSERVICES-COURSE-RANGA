@@ -61,7 +61,7 @@ public class CurrencyConversionController {
     }
 
 
-    @GetMapping("/currency-convertor-feign/from/{fromCurrency}/to/{toCurrency}/{amount}")
+    @GetMapping("/currency-convertor-v2/from/{fromCurrency}/to/{toCurrency}/{amount}")
     public CurrencyConversionDTO getConvertedAmountUsingFeign(
             @PathVariable String fromCurrency,
             @PathVariable String toCurrency,
