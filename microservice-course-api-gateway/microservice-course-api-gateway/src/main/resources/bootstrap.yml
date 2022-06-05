@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: microservice-course-api-gateway
+  cloud:
+    config:
+      uri: http://localhost:8010
+      enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0

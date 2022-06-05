@@ -1,10 +1,28 @@
 spring:
   application:
-    name: konvergion-transaction-management
+    name: microservice-course-transaction-management
   cloud:
     config:
-      uri: http://localhost:8100
+      uri: http://localhost:8010
       enabled: true
+  sleuth:
+    sampler:
+      probability: 0.5
+
+
+resilience4j:
+  retry:
+    instances:
+      transaction-management:
+        max-attempts: 5
+        wait-duration: 2s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+  ratelimiter:
+    instances:
+      transaction-management:
+        limit-for-period: 5
+        limit-refresh-period: 10s
 
 
 
