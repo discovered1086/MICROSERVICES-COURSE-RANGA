@@ -1,0 +1,9 @@
+package com.konvergion.personalfinance.budgetmanagementapi.model.repository;
+
+import com.konvergion.personalfinance.budgetmanagementapi.model.entities.BudgetEstimateItemEntity;
+import com.konvergion.personalfinance.budgetmanagementapi.model.entities.RegularBudgetEstimateItemEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
+
+public interface RegularBudgetEstimateItemRepository extends BudgetEstimateItemRepository<RegularBudgetEstimateItemEntity> {
+}

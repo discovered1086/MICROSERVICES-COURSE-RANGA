@@ -1,0 +1,8 @@
+package com.konvergion.personalfinance.budgetmanagementapi.model.repository;
+
+import com.konvergion.personalfinance.budgetmanagementapi.model.entities.CalculationBudgetEstimateEntity;
+import com.konvergion.personalfinance.budgetmanagementapi.model.entities.RegularBudgetEstimateEntity;
+
+public interface CalculatedBudgetEstimateRepository extends BudgetEstimateRepository<CalculationBudgetEstimateEntity> {
+
+}

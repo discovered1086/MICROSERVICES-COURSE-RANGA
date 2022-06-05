@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: mini-konvergion-eureka-server
+  cloud:
+    config:
+      enabled: false
+server:
+  port: 6999
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false

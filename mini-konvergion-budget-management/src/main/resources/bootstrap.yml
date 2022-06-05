@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: konvergion-budget-management
+  cloud:
+    config:
+      uri: http://localhost:8100/
+      enabled: true
+
+
+
+
+
+
