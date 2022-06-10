@@ -77,3 +77,8 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
+
+
+bootBuildImage{
+    imageName= "discovered1086/${project.name}:${project.version}"
+}

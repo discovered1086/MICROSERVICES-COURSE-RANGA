@@ -36,6 +36,10 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+
+    // https://mvnrepository.com/artifact/org.springframework.retry/spring-retry
+    implementation 'org.springframework.retry:spring-retry:1.3.3'
+
 //    implementation 'org.springframework.amqp:spring-rabbit'
 }
 
@@ -47,4 +51,9 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+
+bootBuildImage{
+    imageName= "discovered1086/${project.name}:${project.version}"
 }

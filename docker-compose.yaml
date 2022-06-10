@@ -1,0 +1,88 @@
+version: '3.7'
+
+services:
+#  microservice-course-item-management:
+#    image: discovered1086/mini-fm-item-management-api:0.0.1-SNAPSHOT
+#    mem_reservation: 700m
+#    ports:
+#      - "9292:9292"
+#    networks:
+#      - microservice-course-network
+#    depends_on:
+#      - microservice-course-config-server
+#      - mini-konvergion-eureka-server
+#      - microservice-course-api-gateway
+#
+  mini-konvergion-eureka-server:
+    image: discovered1086/mini-fm-eureka-server:1.0.0
+    mem_reservation: 400m
+    ports:
+      - "6999:6999"
+    networks:
+      - microservice-course-network
+  
+  microservice-course-config-server:
+    image: discovered1086/mini-konvergion-config-server:0.0.1-SNAPSHOT
+    mem_reservation: 400m
+    ports:
+      - "8010:8010"
+    networks:
+      - microservice-course-network
+        
+  microservice-course-api-gateway:
+    image: discovered1086/microservice-course-api-gateway:0.0.1-SNAPSHOT
+    mem_reservation: 400m
+    ports:
+        - "8011:8011"
+    networks:
+        - microservice-course-network
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+    depends_on:
+      - microservice-course-config-server
+      - mini-konvergion-eureka-server
+#
+#  microservice-course-transaction-management:
+#    image: discovered1086/mini-transaction-search-api:0.0.1-SNAPSHOT
+#    mem_reservation: 700m
+#    ports:
+#        - "9090:9090"
+#    networks:
+#        - microservice-course-network
+#    depends_on:
+#      - microservice-course-config-server
+#      - mini-konvergion-eureka-server
+#      - microservice-course-api-gateway
+#      - microservice-course-item-management
+#
+#  microservice-course-budget-management:
+#    image: discovered1086/mini-konvergion-budget-management:0.0.1-SNAPSHOT
+#    mem_reservation: 700m
+#    ports:
+#        - "9900:9900"
+#    networks:
+#        - microservice-course-network
+#    depends_on:
+#      - microservice-course-config-server
+#      - mini-konvergion-eureka-server
+#      - microservice-course-api-gateway
+#      - microservice-course-transaction-management
+
+networks:
+  microservice-course-network:

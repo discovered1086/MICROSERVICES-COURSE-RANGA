@@ -3,8 +3,17 @@ spring:
     name: microservice-course-api-gateway
   cloud:
     config:
-      uri: http://localhost:8010
+      uri: http://microservice-course-config-server:8010
       enabled: true
+      discovery:
+        enabled: true
+        service-id: microservice-course-config-server
+      retry:
+        initial-interval: 1500
+        multiplier: 1.5
+        max-attempts: 1000
+        max-interval: 10000
+      fail-fast: true
   sleuth:
     sampler:
       probability: 1.0

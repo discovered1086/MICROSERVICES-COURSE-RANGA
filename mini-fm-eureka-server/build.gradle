@@ -32,3 +32,7 @@ dependencyManagement {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+bootBuildImage{
+    imageName= "discovered1086/mini-konvergion-eureka-server:${project.version}"
+}

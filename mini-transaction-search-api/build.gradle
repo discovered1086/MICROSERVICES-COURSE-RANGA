@@ -76,3 +76,8 @@ dependencyManagement {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+
+bootBuildImage{
+    imageName= "discovered1086/${project.name}:${project.version}"
+}
